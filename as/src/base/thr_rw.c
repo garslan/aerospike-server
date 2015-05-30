@@ -3244,9 +3244,13 @@ int write_local_preprocessing(as_transaction *tr, write_local_generation *wlg,
 	// "never expire" flag (0xFFFFffff), and it exceeds configured max_ttl.
 	if (m->record_ttl != 0 && m->record_ttl != 0xFFFFffff &&
 			ns->max_ttl != 0 && m->record_ttl > ns->max_ttl) {
+		if (ns->max_ttl != 0 && ns->max_ttl_set_on_overflow ) {
+ 		   m->record_ttl = ns->max_ttl;
+		} else {
 		cf_info(AS_RW, "write_local: incoming ttl %u too big compared to %u", m->record_ttl, ns->max_ttl);
 		write_local_failed(tr, 0, false, 0, 0, AS_PROTO_RESULT_FAIL_PARAMETER);
 		return -1;
+		}
 	}
 
 	// Fail if disallow_null_setname is true and set name is absent or empty.

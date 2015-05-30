@@ -1006,6 +1006,7 @@ struct as_namespace_s {
 	uint32_t	evict_tenths_pct;
 	uint64_t	default_ttl;
 	uint64_t	max_ttl;
+	bool		max_ttl_set_on_overflow;
 	int			auto_hwm_last_free;
 	int			storage_min_free_wblocks; // the number of wblocks per device to "reserve"
 	int			storage_last_avail_pct; // most recently calculated available percent
